@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!--
+elemento.textContent;
+
+elemento.createElement("tr");
+
+padre.appendChild(hijo);
+
+document.getElementById("id").value;
+innerHTML
+
+##################
+## 7B5 & 7B4 BORRAR HIJOS 
+##################
+function borraHijos(elemento)
+{
+    while (elemento.firstChild)
+    {
+        elemento.removeChild(elemento.firstChild);
+    }
+}
+
+##################
+## 7B5 Selecionar el valor numerico en un option de un archivo JSON
+##################
+<select onchange="cargaPedidos()" name="cliente" id="cliente"></select>
+
+    <table id="tabla_pedidos">
+        <tr id="encabezado"><td>código de artículo</td><td>descripción</td><td>precio</td></tr>
+    </table>
+function cargaPedidos(){
+    borraHijos(document.getElementById("tabla_pedidos")); // Llamada a la función borraHijos para eliminar las filas de la tabla
+
+    let select_clientes = document.getElementById("cliente");
+    let archivoLeido = select_clientes.value;
+
+    fetch(archivoLeido) 
+    &&&&
+    $$$$ 
+        DATA
+    $$$$
+    for(let pedido of data.pedidos)  // pedido es una cadena que se va creando
+    {
+        let nueva_fila = document.createElement("tr");
+
+        let celda_precio = document.createElement("td");
+        celda_precio.innerHTML = pedido.precio+"€";
+
+        nueva_fila.appendChild(precio);
+	$$$$ 
+        Igual con todos los demas elementos como en el caso de celda_precio
+    	$$$$
+
+        document.getElementById("tabla_pedidos").appendChild(nueva_fila);
+    };
+}
+&&&&
+fetch('./arch_lista_clientes.json')
+&&&&
+$$$$ 
+    DATA
+$$$$
+let select_cliente = document.getElementById("cliente");
+for(let cliente of data.lista_clientes)  // cliente es una cadena que se va creando
+{
+    let nueva_opcion = document.createElement("option");
+    nueva_opcion.innerHTML = cliente.nombre;
+    nueva_opcion.value = cliente.id+".json";  
+    select_cliente.appendChild(nueva_opcion);
+};
+
+##################
+## 7B4 Selecionar en un option datos archivo JSON para entrar a otro select con otro JSON
+##################
+    <select name="" id="regiones"></select>
+    <select name="" id="provincias"></select>
+
+    let regiones = document.getElementById("regiones");
+    let provincias = document.getElementById("provincias");
+
+    regiones.addEventListener("change",cargaProvincias);
+    cargaRegiones(); // llamada a la función
+    regiones.value = "clm.json";
+    cargaProvincias();
+
+    function cargaRegiones()
+    {
+        fetch('./regiones.json')
+        &&&&
+        $$$$ 
+            DATA
+        $$$$
+        for(let reg of data.lista_regiones)  // reg es una cadena que se va creando
+        {
+            let nueva_region = document.createElement("option");
+            nueva_region.innerHTML = reg.nombre;
+            nueva_region.value = reg.archivo;
+            regiones.appendChild(nueva_region);
+        };
+        &&&&
+    }
+
+    function cargaProvincias()
+    {
+        let archivo = regiones.value;
+        borraHijos(provincias);
+        fetch(archivo)
+        &&&&
+        $$$$ 
+            DATA
+        $$$$
+        for(let prov of data.lista_provincias)  // reg es una cadena que se va creando
+        {
+            let nueva_provincia = document.createElement("option");
+            nueva_provincia.innerHTML = prov;
+            nueva_provincia.value = prov;
+            provincias.appendChild(nueva_provincia);
+        };
+        &&&&
+    }
+
+##################
+##  7B3D Cargar JSON en una tabla
+##################
+<button id="boton">carga tabla</button>
+<div id="contenedorTabla"></div>
+&&&&
+document.getElementById("boton").onclick = cargaTabla;
+&&&&
+function cargaTabla()
+{
+    fetch('drones.json')
+    &&&&
+    $$$$ 
+        DATA
+    $$$$
+    let tabla = document.createElement("table");
+
+    for (let dron of data.listaDrones)
+    {
+        let fila = document.createElement("tr");
+
+        let celdaFabricante = document.createElement("td");
+        celdaFabricante.innerHTML = dron.fabricante;
+        
+        let celdaComentarios = document.createElement("td");
+        let listaComentarios = document.createElement("ul");
+        for (let i=0; i < dron.comentarios.length; i++)
+        {
+            let liComentarios = document.createElement("li");
+            liComentarios.textContent = dron.comentarios[i];
+            listaComentarios.appendChild(liComentarios);
+        } 
+        celdaComentarios.appendChild(listaComentarios);
+
+        fila.appendChild(celdaFabricante);
+        fila.appendChild(celdaComentarios);
+
+        tabla.appendChild(fila);
+    }
+
+    let contenedorTabla = document.getElementById("contenedorTabla");
+    contenedorTabla.innerHTML = ''; // Limpiar el contenido previo
+    contenedorTabla.appendChild(tabla);
+    &&&&
+}
+
+##################
+##  7B3C
+##################
+<button id="boton">carga tabla</button>
+<div id="contenedorTabla"></div>
+
+document.getElementById("boton").onclick = cargaTabla;
+
+function cargaTabla()
+{
+    fetch('drones.json')
+    &&&&
+    $$$$ 
+        DATA
+    $$$$
+    let tabla = document.createElement("table");
+    for (let dron of data.listaDrones)
+    {
+        let fila = document.createElement("tr");
+
+        let celdaFabricante = document.createElement("td");
+        celdaFabricante.innerHTML = dron.fabricante;
+
+        let celdaComentarios = document.createElement("td");
+        celdaComentarios.innerHTML = dron.comentarios;
+
+        fila.appendChild(celdaFabricante);
+        fila.appendChild(celdaComentarios);
+
+        tabla.appendChild(fila);
+    }
+
+    let contenedorTabla = document.getElementById("contenedorTabla");
+    contenedorTabla.innerHTML = ''; // Limpiar el contenido previo
+    contenedorTabla.appendChild(tabla);        
+}
+
+##################
+##  7B3B
+##################
+<select onchange="carga()" id="fabricante">
+    <option value="0" selected>Elija ...</option>
+    <option value="1">Andres e Hijos SL</option>
+    <option value="2">Benjadure SL</option>
+    <option value="3">Pablo Simon SL</option>
+</select>
+
+<ol id="lista"></ol>
+
+document.getElementById("distribuidor").onchange = carga;
+
+function carga() 
+{
+    fetch('drones.json')
+    &&&&
+    $$$$ 
+        DATA
+    $$$$
+    // Obtener el valor actual del elemento <select>
+    const i = document.getElementById("distribuidor").value - 1;
+
+    let miLista = document.getElementById("lista");
+
+    let li1 = document.createElement("li");
+    li1.innerHTML = data.listaDrones[i].fabricante;
+    miLista.appendChild(li1);
+
+    let li8 = document.createElement("li");
+    li8.innerHTML = data.listaDrones[i].comentarios;
+    miLista.appendChild(li8);
+
+    miLista.appendChild(document.createElement("hr"));
+}
+-->
+</body>
+</html>
